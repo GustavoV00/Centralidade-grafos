@@ -105,10 +105,18 @@ queue_grafo_t *le_grafo(FILE *input) {
 // devolve o coeficiente de proximidade do vértice v de g
 //
 
-// double coeficiente_proximidade(grafo g, vertice v) {
+double coeficiente_proximidade(queue_grafo_t *g, vertice_t v) {
+  int n = queue_size((queue_t *)g);
+  int *distancias = malloc(n * sizeof(int));
+  queue_grafo_t *aux;
 
-//   v = NULL;
-//   g = NULL;
+  // while (n > 0) {
+  //   aux = g;
+  //   int possiveis_starters = aux->vertice.indice;
+  //   do {
 
-//   return !(v == (vertice)g);
-// }
+  //   }while(aux->)
+  // }
+
+  return 0.0;
+}

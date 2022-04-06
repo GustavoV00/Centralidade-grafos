@@ -36,6 +36,12 @@ typedef struct queue_grafo_t {
   struct vertice_t *lista_adj;
 
 } queue_grafo_t;
+
+//------------------------------------------------------------------------------
+// Imprime a fila de nodos, e suas respectivas listas de adjacências. 
+//
+void print_fila(void *ptr);
+
 //------------------------------------------------------------------------------
 // desaloca toda a memória usada em *g
 //
@@ -73,7 +79,7 @@ vertice_t le_vertice(void);
 // total de tríades (ou seja, a soma de tríades abertas e fechadas).
 //
 
-double coeficiente_proximidade(queue_grafo_t g, vertice_t v);
+double coeficiente_proximidade(queue_grafo_t *g, vertice_t v);
 
 //------------------------------------------------------------------------------
 #endif
