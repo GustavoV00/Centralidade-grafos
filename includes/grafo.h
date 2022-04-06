@@ -14,8 +14,8 @@
 // o vértice tem um nome, que é uma "string"
 
 typedef struct vertice_t {
-  char v;
-  struct vertice_t *vizinhos;
+  char id;
+  int indice;
 
 } vertice_t;
 
@@ -24,15 +24,16 @@ typedef struct vertice_t {
 
 // } grafo_t;
 
+// Em vez de utilizar uma matriz para representar o
+// grafo, estou utilizando uma fila. Sendo que cada nodo
+// dessa lista, é  eferente a um id. a, b, c, ..., z
 typedef struct queue_grafo_t {
-  struct queue_t *prev;
-  struct queue_t *next; // Em vez de utilizar uma matriz para representar o
-                        // grafo, estou utilizando uma fila. Sendo que cada nodo
-                        // dessa lista, é  eferente a um id. a, b, c, ..., z
+  struct queue_grafo_t *prev;
+  struct queue_grafo_t *next;
   struct vertice_t vertice;
-  struct vertice_t
-      *lista_adj;   // Lista que contem os vértices, que o nodo x fazem parte
-  int num_vertices; // Indica qual o tamanho da lista_adj no nodo id
+
+  // Lista que contem os vértices, que o nodo x fazem parte
+  struct vertice_t *lista_adj;
 
 } queue_grafo_t;
 //------------------------------------------------------------------------------
