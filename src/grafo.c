@@ -2,6 +2,7 @@
 #include "../includes/queue.h"
 #include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define SIZE 27
 
@@ -110,25 +111,26 @@ queue_grafo_t *le_grafo(FILE *input) {
 
   FILE *f = input;
 
-  // char *v1 = malloc(1024 * sizeof(char));
-  // char *v2 = malloc(1024 * sizeof(char));
   char *v = malloc(2050 * sizeof(char));
-  // while (!feof(f)) {
   while (fgets(v, 2050, f) != NULL) {
     if (v[0] != '\n') {
       char *v1 = malloc(1024 * sizeof(char));
       char *v2 = malloc(1024 * sizeof(char));
       separa_vertices(v1, v2, v);
       printf("v1 = %s v2 = %s\n", v1, v2);
+      printf("len v1 = %lu len v2 = %lu\n", strlen(v1), strlen(v2));
+
+      //se tem v1 e v2 -> verificar se já existe vértice v1 e v2 e criar uma aresta entre v1 e v2 (na vizinhança dos dois)
+
+      //se tem apenas v1 = vértice isolado
+
+      // if (v1 != v2)
+      //   grafo = inclui_nodo_na_fila(v1, v2, grafo);
     }
-    // fscanf(f, "%s %s ", v1, v2);
-    // if (v1 != v2)
-    //   grafo = inclui_nodo_na_fila(v1, v2, grafo);
-    // printf("%s e %s\n", v1, v2);
+    
   }
 
-  // free(v1);
-  // free(v2);
+  free(v);
   fclose(f);
 
   return grafo;
