@@ -82,6 +82,8 @@ void separa_vertices(char *v1, char *v2, char *v) {
     if (espaco != 0) {
       flag = 1;
       j = 0;
+      i++;
+      continue;
     }
 
     if (flag == 0) {
@@ -117,7 +119,7 @@ queue_grafo_t *le_grafo(FILE *input) {
       char *v1 = malloc(1024 * sizeof(char));
       char *v2 = malloc(1024 * sizeof(char));
       separa_vertices(v1, v2, v);
-      printf("%s %s", v1, v2);
+      printf("v1 = %s v2 = %s\n", v1, v2);
     }
     // fscanf(f, "%s %s ", v1, v2);
     // if (v1 != v2)
