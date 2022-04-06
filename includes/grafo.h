@@ -14,7 +14,7 @@
 // o vértice tem um nome, que é uma "string"
 
 typedef struct vertice_t {
-  char id;
+  char *id;
   int indice;
 
 } vertice_t;

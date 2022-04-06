@@ -13,10 +13,10 @@ void print_fila(void *ptr) {
     return;
 
   // elem->prev ? printf("%c", elem->prev->vertice.id) : printf("*");
-  printf("%c = ", elem->vertice.id);
+  printf("%s = ", elem->vertice.id);
   printf("[ ");
   for (int i = 0; i < elem->vertice.indice; i++) {
-    printf("%c ", elem->lista_adj[i].id);
+    printf("%s ", elem->lista_adj[i].id);
   }
   printf("]\n");
   // elem->prev ? printf("%c", elem->next->vertice.id) : printf("*");
@@ -45,7 +45,7 @@ typedef struct vertice *vertice;
 
 // int destroi_grafo(queue_grafo_t g) { return g == NULL; }
 
-queue_grafo_t *inclui_nodo_na_fila(char v1, char v2, queue_grafo_t *g) {
+queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
   queue_grafo_t *novo_vertice = (queue_grafo_t *)malloc(sizeof(queue_grafo_t));
   novo_vertice->prev = NULL;
   novo_vertice->next = NULL;
@@ -119,13 +119,12 @@ queue_grafo_t *le_grafo(FILE *input) {
       separa_vertices(v1, v2, v);
       printf("v1 = %s v2 = %s\n", v1, v2);
       printf("len v1 = %lu len v2 = %lu\n", strlen(v1), strlen(v2));
+      printf("\n");
 
-      //se tem v1 e v2 -> verificar se já existe vértice v1 e v2 e criar uma aresta entre v1 e v2 (na vizinhança dos dois)
-
+      //se tem v1 e v2 -> verificar se já existe vértice v1 e v2 e 
+      //criar uma aresta entre v1 e v2 (na vizinhança dos dois)
       //se tem apenas v1 = vértice isolado
-
-      // if (v1 != v2)
-      //   grafo = inclui_nodo_na_fila(v1, v2, grafo);
+      grafo = inclui_nodo_na_fila(v1, v2, grafo);
     }
     
   }

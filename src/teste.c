@@ -9,7 +9,7 @@ int main(void) {
   double coef;
 
   queue_grafo_t *grafo = le_grafo(stdin);
-  // queue_print("Elementos inseridos:\n", (queue_t *)grafo, print_fila);
+  queue_print("Elementos inseridos:\n", (queue_t *)grafo, print_fila);
   // v = le_vertice();
 
   // coef = coeficiente_proximidade(grafo, v);
