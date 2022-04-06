@@ -1,6 +1,6 @@
-//TRAB1 IA - 2021-2
-//GUSTAVO VALENTE NUNES GRR20182557
-//BRUNO EDUARDO FARIAS GRR20186715
+// TRAB1 IA - 2021-2
+// GUSTAVO VALENTE NUNES GRR20182557
+// BRUNO EDUARDO FARIAS GRR20186715
 
 #ifndef __QUEUE__
 #define __QUEUE__
@@ -10,8 +10,6 @@
 #define NULL ((void *)0)
 #endif
 */
-
-#include "../include/includes.h"
 
 //------------------------------------------------------------------------------
 // estrutura de uma fila genérica, sem conteúdo definido.
@@ -57,6 +55,6 @@ int queue_append(queue_t **queue, queue_t *elem);
 // Retorno: 0 se sucesso, <0 se ocorreu algum erro
 
 int queue_remove(queue_t **queue, queue_t *elem);
-int fila_correta(queue_state_t *fila);
+// int fila_correta(queue_state_t *fila);
 
 #endif
