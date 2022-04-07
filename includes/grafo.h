@@ -13,32 +13,39 @@
 //
 // o vértice tem um nome, que é uma "string"
 
-typedef struct vertice_t {
-  char *id;
-  int indice;
+typedef struct vertice_t
+{
+	char *id;
+	int indice;
 
 } vertice_t;
 
-// typedef struct grafo_t {
-//   struct vertice_t *lista_adj;
+typedef struct lista_adj_t
+{
+	struct lista_adj_t *prev;
+	struct lista_adj_t *next;
+	char *vertice;
+	// struct vertice_t *lista_adj;
 
-// } grafo_t;
+} lista_adj_t;
 
 // Em vez de utilizar uma matriz para representar o
 // grafo, estou utilizando uma fila. Sendo que cada nodo
 // dessa lista, é  eferente a um id. a, b, c, ..., z
-typedef struct queue_grafo_t {
-  struct queue_grafo_t *prev;
-  struct queue_grafo_t *next;
-  struct vertice_t vertice;
+typedef struct queue_grafo_t
+{
+	struct queue_grafo_t *prev;
+	struct queue_grafo_t *next;
+	struct lista_adj_t *lista_adj;
+	char *vertice;
 
-  // Lista que contem os vértices, que o nodo x fazem parte
-  struct vertice_t *lista_adj;
+	// Lista que contem os vértices, que o nodo x fazem parte
 
 } queue_grafo_t;
 
 //------------------------------------------------------------------------------
-// Imprime a fila de nodos, e suas respectivas listas de adjacências. 
+// Imprime a fila de nodos, e suas respectivas listas de adjacências.
+
 //
 void print_fila(void *ptr);
 
