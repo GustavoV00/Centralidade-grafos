@@ -98,8 +98,6 @@ lista_adj_t *inicia_nova_lista(char *v) {
   return nova_lista_adj;
 }
 
-int verifica_se_esta_no_grafo(queue_grafo_t *g, char *vertice) {}
-
 queue_grafo_t *adicionar_no_grafo_nulo(queue_grafo_t *g,
                                        queue_grafo_t *novo_vertice,
                                        queue_grafo_t *novo_vertice2,
@@ -127,6 +125,21 @@ queue_grafo_t *adicionar_no_grafo_nulo(queue_grafo_t *g,
 
   printf("\n");
 
+  return g;
+}
+
+// Os parametros v1 e v2 são trocados, dependendo se v1 ou v2 que está sendo
+// inserido
+queue_grafo_t *adiciona_novo_vertice_grafo(queue_grafo_t *g, char *v1, char *v2,
+                                           queue_grafo_t *novo_vertice,
+                                           lista_adj_t *nova_lista_adj) {
+
+  printf("Adicionando v1 = %s no grafo\n", v1);
+
+  strcpy(novo_vertice->vertice, v1);
+  strcpy(nova_lista_adj->vertice, v2);
+  queue_append((queue_t **)&g, (queue_t *)novo_vertice);
+  queue_append((queue_t **)&novo_vertice->lista_adj, (queue_t *)nova_lista_adj);
   return g;
 }
 
@@ -224,26 +237,13 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
     printf("Saiu da procura do V1!\n");
 
     // se v1 não estiver no grafo -> adiciona
-    if (v1_esta_grafo == 0) {
-      printf("Adicionando v1 = %s no grafo\n", v1);
-
-      strcpy(novo_vertice->vertice, v1);
-      strcpy(nova_lista_adj->vertice, v2);
-      queue_append((queue_t **)&g, (queue_t *)novo_vertice);
-      queue_append((queue_t **)&novo_vertice->lista_adj,
-                   (queue_t *)nova_lista_adj);
-    }
+    if (v1_esta_grafo == 0)
+      g = adiciona_novo_vertice_grafo(g, v1, v2, novo_vertice, nova_lista_adj);
 
     // se v2 não estiver no grafo -> adiciona
-    if (v2_esta_grafo == 0) {
-      printf("Adicionando v2 = %s no grafo\n", v2);
-
-      strcpy(novo_vertice2->vertice, v2);
-      strcpy(nova_lista_adj2->vertice, v1);
-      queue_append((queue_t **)&g, (queue_t *)novo_vertice2);
-      queue_append((queue_t **)&novo_vertice2->lista_adj,
-                   (queue_t *)nova_lista_adj2);
-    }
+    if (v2_esta_grafo == 0)
+      g = adiciona_novo_vertice_grafo(g, v2, v1, novo_vertice2,
+                                      nova_lista_adj2);
     printf("Sai do aux\n");
 
     return g;
