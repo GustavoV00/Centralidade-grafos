@@ -320,7 +320,19 @@ queue_grafo_t *le_grafo(FILE *input)
 	return grafo;
 }
 
+queue_grafo_t *busca_vertice_id(queue_grafo_t *g, char *vertice){
+  printf("Procurando vertice %s...\n", vertice);
+  queue_grafo_t *aux = g; 
+  do {
+    if(strcmp(aux->vertice, vertice) == 0){
+      return aux;
+    }
+    aux = aux->next;
+  } while (aux != g);
 
+  fprintf(stderr, "Falha ao encontrar vertice %s!\n", vertice);
+  return NULL;
+}
 
 queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r){
 
@@ -355,7 +367,7 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r){
       queue_append((queue_t **)&V, (queue_t *)novo_vertice);
       printf("Enfileirou a raiz em V!\n");
 
-      queue_print("Fila: \n", (queue_t *)V, print_fila);
+      queue_print("Fila: ", (queue_t *)V, print_fila);
 
       aux->estado = 1;
       aux->distancia = 0;
@@ -363,11 +375,12 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r){
       //enquanto V não estiver vazia
       int cont = 0;
       while(queue_size((queue_t *) V) > 0){
-        printf("######################\n");
+        printf("##########################################################\n");
         //retirar um vertice v da fila
         queue_grafo_t *v = V;
-        //retirar_primeiro_elemento_queue((queue_t **) &V, (queue_t*) v);
-        //queue_remove((queue_t **)&V, (queue_t *) &V);
+        
+        //queue_remove estava dando problema
+        //remove sempre o primeiro elemento
         if(queue_size((queue_t *) V) == 1){
           V = NULL;
         } else {
@@ -386,90 +399,71 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r){
         printf("Removeu vértice %s da fila!\n", v->vertice);
         cont++;
 
-        queue_print("Fila: \n", (queue_t *)V, print_fila);
-
-        
+        queue_print("Fila: ", (queue_t *)V, print_fila);
 
         printf("Procurando vértice %s no grafo...\n", v->vertice);
-        queue_grafo_t *aux3 = g; 
-        do {
-          if(strcmp(aux3->vertice, v->vertice) == 0){
-            v = aux3;
-            break;
-          }
-          aux3 = aux3->next;
-        } while(aux3 != g);
+        v = busca_vertice_id(g, v->vertice);
+        if(v == NULL){
+          return g;
+        }
 
 
         //para cada w da fronteira de v (lista de adjacencia de v)
         lista_adj_t *w = v->lista_adj;
 
         if(w == NULL){
-          printf("w é NULL!\n");
+          printf("w é NULL -> %s é vértice isolado!\n", v->vertice);
+          continue;
         }
 
         printf("Vai percorrer todos os vizinhos de %s\n", v->vertice);
 
-        if(cont > 1){
-          //return 0;
-        }
-
         //percorre todos os vizinhos
-        int contVizinhos = 0;
         do {
-
-          printf("$$$$w = %s\n", w->vertice);
+          printf("======================\n");
+          printf("w = %s\n", w->vertice);
           
-          //procura esse w no grafo (novamente, verificar isso)
-          queue_grafo_t *auxx = g; 
-          do {
+          //procura esse w (vizinho de v) no grafo
+          queue_grafo_t *auxx = busca_vertice_id(g, w->vertice);
+          if(auxx == NULL){
+            return g;
+          }
 
-            if(strcmp(auxx->vertice, w->vertice) == 0){
-              printf("encontrou w = %s no grafo!\n", w->vertice);
-              if(auxx->estado == 0){
-                printf("auxx = %s está no estado 0!\n", auxx->vertice);
+          printf("Encontrou w = %s no grafo!\n", auxx->vertice);
+
+          if(auxx->estado == 0){
+            printf("w = %s está no estado 0!\n", auxx->vertice);
         
-                //processar vértice
-                //processar aresta
-                
-                //w->pai = v->vertice;
-                auxx->pai = malloc(strlen(v->vertice) * sizeof(char));
-                strcpy(auxx->pai, v->vertice);
-                printf("Setou o pai de %s como %s\n", auxx->vertice, v->vertice);
+            //w->pai = v->vertice;
+            auxx->pai = malloc(strlen(v->vertice) * sizeof(char));
+            strcpy(auxx->pai, v->vertice);
+            printf("Setou o pai de %s como %s\n", auxx->vertice, v->vertice);
 
-                auxx->distancia = v->distancia+1;
-                printf("distancia de %s é %d\n", auxx->vertice, auxx->distancia);
+            auxx->distancia = v->distancia+1;
+            printf("distancia de %s é %d\n", auxx->vertice, auxx->distancia);
 
-                //enfileirar w em V
-                queue_grafo_t *novo_vertice2 = inicia_novo_vertice(auxx->vertice);
-                strcpy(novo_vertice2->vertice, auxx->vertice);
-                queue_append((queue_t **)&V, (queue_t *)novo_vertice2);
-                printf("Enfileirou w = %s na fila!\n", auxx->vertice);
+            //enfileirar w em V
+            queue_grafo_t *novo_vertice2 = inicia_novo_vertice(auxx->vertice);
+            strcpy(novo_vertice2->vertice, auxx->vertice);
+            queue_append((queue_t **)&V, (queue_t *)novo_vertice2);
+            printf("Enfileirou w = %s na fila!\n", auxx->vertice);
 
-                queue_print("Fila: \n", (queue_t *)V, print_fila);
+            queue_print("Fila: ", (queue_t *)V, print_fila);
 
-                auxx->estado = 1;
-                printf("Setou o estado de w = %s para 1\n", auxx->vertice);
-
-                break;
-              }
-            }
-
-            auxx = auxx->next;
-          } while(auxx != g);
+            auxx->estado = 1;
+            printf("Setou o estado de w = %s para 1\n", auxx->vertice);
+          } else {
+            printf("w = %s está no estado %d -> NÃO FAZ NADA!\n", auxx->vertice, auxx->estado);
+          }
+         
 
           w = w->next;
-
-          contVizinhos++;
-          if(contVizinhos > 5){
-            return 0;
-          }
         } while(w != v->lista_adj);
 
         v->estado = 2;
         printf("Setou o estado de %s para 2!\n", v->vertice);
 
-        queue_print("Fila: \n", (queue_t *)V, print_fila);
+        queue_print("Fila: ", (queue_t *)V, print_fila);
       }
     }
 
@@ -507,10 +501,12 @@ queue_grafo_t *busca_em_largura(queue_grafo_t *g, , char *v){
 
 double coeficiente_proximidade(queue_grafo_t *g, char *v)
 {
-  printf("Procurando coeficiente_proximidade do vértice %s\n", v);
+  printf("\n\n\n\n\nProcurando coeficiente_proximidade do vértice %s\n", v);
 
   g = caminhos_minimos(g, v);
 
+
+  printf("\n\n\n\nÁrvore de caminhos mínimos:\n");
   //percorre o grafo imprimindo
   queue_grafo_t *aux = g ; 
   do {
