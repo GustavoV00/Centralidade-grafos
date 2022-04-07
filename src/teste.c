@@ -13,7 +13,10 @@ int main(void)
 	// queue_print("Elementos inseridos:\n", (queue_t *)grafo, print_fila);
 	// v = le_vertice();
 
-	// coef = coeficiente_proximidade(grafo, v);
+	char vertice_procurado = 'i';
+	
+
+	coef = coeficiente_proximidade(grafo, &vertice_procurado);
 
 	// printf("O coeficiente de proximidade é %f\n", coef);
 

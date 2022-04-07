@@ -320,6 +320,90 @@ queue_grafo_t *le_grafo(FILE *input)
 	return grafo;
 }
 
+
+
+queue_grafo_t *busca_em_largura_vertice(queue_grafo_t *g, char *r){
+
+  //verificar algoritmo de caminhos mínimos
+
+  //V <- fila vazia
+  queue_grafo_t *V = (queue_grafo_t *)malloc(sizeof(queue_grafo_t));
+
+  //procura o vértice r no grafo
+  int encontrou_r = 0;
+  queue_grafo_t *aux = g ; 
+  do {
+    //verifica se é o vértice raiz
+    if(strcmp(aux->vertice, r) == 0){
+      encontrou_r = 1;
+      
+      //processar r
+
+      aux->pai = NULL;
+
+      //enfileirar r em V
+      queue_grafo_t *novo_vertice = inicia_novo_vertice(r);
+      queue_append((queue_t **)&V, (queue_t *)novo_vertice);
+
+      aux->estado = 1;
+
+      //enquanto V não estiver vazia
+      while(queue_size((queue_t *) &V) > 0){
+        //retirar um vertice v da fila
+        queue_grafo_t *v;
+        retirar_primeiro_elemento_queue((queue_t **) &g, (queue_t*) v); 
+
+        //para cada w da fronteira de v (lista de adjacencia de v)
+        lista_adj_t *w = v->lista_adj;
+        do {
+          
+          //procura esse w no grafo (novamente, verificar isso)
+          queue_grafo_t *auxx = g; 
+          do {
+
+            if(strcmp(auxx->vertice, w->vertice) == 0){
+              if(w->estado == 1){
+                //processar aresta (inútil para nós?)
+              } else if(w->estado == 0){
+                //processar vértice
+                //processar aresta
+                w->pai = v->vertice;
+
+                //enfileirar w em V
+
+                w.estado = 1;
+              }
+            }
+
+            auxx = auxx->next;
+          } while(auxx != g);
+
+          w = w->next;
+        } while(w != aux->lista_adj);
+
+        v.estado = 2;
+
+      }
+    }
+  } while (aux != grafo);
+
+  if(encontrou_r == 0){
+    perror("Esse vértice não existe no grafo!");
+  }
+}
+
+
+queue_grafo_t *busca_em_largura(queue_grafo_t *g, , char *v){
+  //percorre todos os vértices e seta o estado como 0
+  queue_grafo_t *aux = grafo ; 
+  do {
+    aux->estado = 0;
+  } while (aux != grafo);
+
+  busca_em_largura_vertice(g, v);
+}
+
+
 //------------------------------------------------------------------------------
 // lê um vertice
 
@@ -329,14 +413,17 @@ queue_grafo_t *le_grafo(FILE *input)
 // devolve o coeficiente de proximidade do vértice v de g
 //
 
-double coeficiente_proximidade(queue_grafo_t *g, vertice_t v)
+double coeficiente_proximidade(queue_grafo_t *g, char *v)
 {
+  printf("Procurando coeficiente_proximidade do vértice %s\n", v);
 
-	int n = queue_size((queue_t *)g);
+	//int n = queue_size((queue_t *)g);
 
-	int *distancias = malloc(n * sizeof(int));
+	//int *distancias = malloc(n * sizeof(int));
 
-	queue_grafo_t *aux;
+	//queue_grafo_t *aux;
+
+  //
 
 	return 0.0;
 }

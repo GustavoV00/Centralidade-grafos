@@ -38,6 +38,9 @@ typedef struct queue_grafo_t
 	struct queue_grafo_t *next;
 	struct lista_adj_t *lista_adj;
 	char *vertice;
+	int distancia;
+	int estado;
+	char *pai;
 
 	// Lista que contem os vértices, que o nodo x fazem parte
 
@@ -86,7 +89,7 @@ vertice_t le_vertice(void);
 // total de tríades (ou seja, a soma de tríades abertas e fechadas).
 //
 
-double coeficiente_proximidade(queue_grafo_t *g, vertice_t v);
+double coeficiente_proximidade(queue_grafo_t *g, char *v);
 
 //------------------------------------------------------------------------------
 #endif

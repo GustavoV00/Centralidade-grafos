@@ -5,6 +5,17 @@
 #include "../includes/queue.h"
 #include <stdio.h>
 
+int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem){
+  if (*queue != NULL) {
+    perror("Erro ao remover primeiro elemento da fila: NULL!\n");
+    return -1;
+  }
+
+  elem = *(queue);
+
+  return queue_remove(queue, elem);
+}
+
 /**
  * Appends a element to the queue
  *

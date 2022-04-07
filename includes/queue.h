@@ -11,6 +11,8 @@
 #endif
 */
 
+
+
 //------------------------------------------------------------------------------
 // estrutura de uma fila genérica, sem conteúdo definido.
 // Veja um exemplo de uso desta estrutura em testafila.c
@@ -19,6 +21,8 @@ typedef struct queue_t {
   struct queue_t *prev; // aponta para o elemento anterior na fila
   struct queue_t *next; // aponta para o elemento seguinte na fila
 } queue_t;
+
+int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem);
 
 //------------------------------------------------------------------------------
 // Conta o numero de elementos na fila
