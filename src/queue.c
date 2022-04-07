@@ -6,13 +6,18 @@
 #include <stdio.h>
 
 int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem){
-  if (*queue != NULL) {
+  printf("Retirando primeiro elemento da fila...\n");
+  if (*queue == NULL) {
     perror("Erro ao remover primeiro elemento da fila: NULL!\n");
     return -1;
   }
 
-  elem = *(queue);
+  printf("aqui\n");
 
+  elem = *(queue);
+  //printf("Elem: %s\n", elem->vertice)
+
+  printf("Chamando queue_remove...\n");
   return queue_remove(queue, elem);
 }
 
@@ -168,6 +173,7 @@ int queue_size(queue_t *queue) {
     int tamanhoFila = 1;
     while ((aux = aux->next) != queue)
       tamanhoFila += 1;
+    //printf("tamanhoFila = %d\n", tamanhoFila);
     return tamanhoFila;
   }
 }
