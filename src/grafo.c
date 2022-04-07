@@ -9,7 +9,20 @@
 
 void print_filas_adjacencia(queue_grafo_t *grafo)
 {
-	// percorre todos os vértices
+
+  queue_grafo_t *aux = grafo ; 
+	do {
+    printf("%s -> ", aux->vertice);
+
+    lista_adj_t *aux2 = aux->lista_adj;
+
+    do {
+      printf("%s, ", aux2->vertice);
+      aux2 = aux2->next;
+    } while(aux2 != aux->lista_adj);
+    aux = aux->next;
+    printf("\n");
+  } while (aux != grafo);
 }
 
 void print_fila(void *ptr)
@@ -103,13 +116,18 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g)
 	{
 		queue_grafo_t *aux = g;
 		// Verifica se o indice v1 já não existe no grafo.
+    int v1_esta_grafo = 0;
+    int v2_esta_grafo = 0;
 		do
 		{
 			// Caso esse vértice exista no grafo, verifico se o v2
 			// Existe em sua lista de adjacência.
 			printf(" aux = %s\n", aux->vertice);
+      printf("Verificando se v1 = %s está no grafo...\n", v1);
 			if (strcmp(aux->vertice, v1) == 0)
 			{
+        v1_esta_grafo = 1;
+        printf("V1 está no grafo!\n");
 				printf("Elemento aux: %s igual ao v1: %s\n", aux->vertice, v1);
 				int precisa_adicionar = 1;
 				lista_adj_t *aux2 = aux->lista_adj;
@@ -125,19 +143,85 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g)
 						break;
 					}
 					aux2 = aux2->next;
-				} while (aux2 != aux->lista_adj && aux2 != NULL);
+				} while (aux2 != NULL && aux2 != aux->lista_adj);
 
 				if (precisa_adicionar)
 				{
-					strcpy(nova_lista_adj->vertice, v2);
-					queue_append((queue_t **)&aux->lista_adj, (queue_t *)nova_lista_adj);
+          lista_adj_t *nova_lista_aux = inicia_nova_lista(v2);
+          printf("Precisa adicionar v2 = %s na lista de adj de v1 = %s\n", v2, v1);
+          strcpy(nova_lista_aux->vertice, v2);
+					queue_append((queue_t **)&aux->lista_adj, (queue_t *)nova_lista_aux);
+          printf("Adicionou v2 na lista de adj!\n");
 				}
 
-				return g;
+				//return g;
 			}
+
+      //verifica se v2 está no grafo
+      if(strlen(v2) > 0){
+        printf("Verificando se v2 = %s está no grafo...\n", v2);
+
+        if (strcmp(aux->vertice, v2) == 0)
+        {
+          v2_esta_grafo = 1;
+          printf("V2 está no grafo!\n");
+
+          printf("Elemento aux: %s igual ao v2: %s\n", aux->vertice, v2);
+
+          int precisa_adicionar = 1;
+          lista_adj_t *aux2 = aux->lista_adj;
+
+          // Verifica se o v1 já existe na lista de adjacência do v2
+          do
+          {
+            printf("Verificando se v1 = %s está na lista de adjacencia de v2 = %s\n", v1, v2);
+            if (strcmp(aux2->vertice, v1) == 0)
+            {
+              printf("Estou na lista de adjacência\n");
+              precisa_adicionar = 0;
+              break;
+            }
+            aux2 = aux2->next;
+          } while (aux2 != NULL && aux2 != aux->lista_adj);
+
+          if (precisa_adicionar)
+          {
+            lista_adj_t *nova_lista_aux = inicia_nova_lista(v1);
+            printf("Precisa adicionar v1 = %s na lista de adj de v2 = %s\n", v1, v2);
+            strcpy(nova_lista_aux->vertice, v1);
+            queue_append((queue_t **)&aux->lista_adj, (queue_t *)nova_lista_aux);
+            printf("Adicionou v1 na lista de adj!\n");
+          }
+
+        }
+      }
 			aux = aux->next;
 		} while (aux != g);
+
+    printf("Saiu da procura do V1!\n");
+
+    //se v1 não estiver no grafo -> adiciona
+    if(v1_esta_grafo == 0){
+      printf("Adicionando v1 = %s no grafo\n", v1);
+
+      strcpy(novo_vertice->vertice, v1);
+      strcpy(nova_lista_adj->vertice, v2);
+      queue_append((queue_t **)&g, (queue_t *)novo_vertice);
+      queue_append((queue_t **)&novo_vertice->lista_adj, (queue_t *)nova_lista_adj);
+    }
+
+    //se v2 não estiver no grafo -> adiciona
+    if(v2_esta_grafo == 0){
+      printf("Adicionando v2 = %s no grafo\n", v2);
+
+      strcpy(novo_vertice2->vertice, v2);
+      strcpy(nova_lista_adj2->vertice, v1);
+      queue_append((queue_t **)&g, (queue_t *)novo_vertice2);
+      queue_append((queue_t **)&novo_vertice2->lista_adj, (queue_t *)nova_lista_adj2);
+    }
 		printf("Sai do aux\n");
+
+    return g;
 	}
 
 	printf("Estou aqui: %s e %s\n", v1, v2);
@@ -153,7 +237,6 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g)
 	queue_append((queue_t **)&novo_vertice2->lista_adj, (queue_t *)nova_lista_adj2);
 
 	// novo_vertice2->lista_adj = nova_lista_adj2;
-
 	queue_print("Fila: \n", (queue_t *)g, print_fila);
 	queue_print("Lista_adj1: ", (queue_t *)nova_lista_adj, print_fila_adj);
 	queue_print("Lista_adj2: ", (queue_t *)nova_lista_adj2, print_fila_adj);
