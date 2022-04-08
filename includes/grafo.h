@@ -14,7 +14,7 @@
 // o vértice tem um nome, que é uma "string"
 
 typedef struct vertice {
-   char *id;
+  char *id;
 } vertice;
 
 typedef struct lista_adj_t {
@@ -54,7 +54,7 @@ void print_fila(void *ptr);
 //         ou
 //         0, caso contrário
 
-//int destroi_grafo(queue_grafo_t g);
+int destroi_grafo(queue_grafo_t *g);
 
 //------------------------------------------------------------------------------
 // lê um grafo de input.

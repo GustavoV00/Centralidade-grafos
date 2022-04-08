@@ -12,15 +12,14 @@ void print_filas_adjacencia(queue_grafo_t *grafo) {
   do {
     printf("%s -> ", aux->vertice);
 
-    
     lista_adj_t *aux2 = aux->lista_adj;
-    if(aux2 != NULL){
+    if (aux2 != NULL) {
       do {
         printf("%s, ", aux2->vertice);
         aux2 = aux2->next;
       } while (aux2 != NULL && aux2 != aux->lista_adj);
     }
-    
+
     aux = aux->next;
     printf("\n");
   } while (aux != grafo);
@@ -65,13 +64,12 @@ void print_fila_adj(void *ptr) {
 
 typedef struct grafo *grafo;
 
-
 //------------------------------------------------------------------------------
 // (apontador para) estrutura de dados para representar um vértice
 //
 // o vértice tem um nome, que é uma "string"
 
-//typedef struct vertice *vertice;
+// typedef struct vertice *vertice;
 
 //------------------------------------------------------------------------------
 // desaloca toda a memória usada em *g
@@ -155,13 +153,14 @@ queue_grafo_t *adiciona_novo_vertice_grafo(queue_grafo_t *g, char *v1, char *v2,
   strcpy(novo_vertice->vertice, v1);
   queue_append((queue_t **)&g, (queue_t *)novo_vertice);
 
-  if(strlen(v2) > 0){
+  if (strlen(v2) > 0) {
     strcpy(nova_lista_adj->vertice, v2);
-    queue_append((queue_t **)&novo_vertice->lista_adj, (queue_t *)nova_lista_adj);
+    queue_append((queue_t **)&novo_vertice->lista_adj,
+                 (queue_t *)nova_lista_adj);
   } else {
     novo_vertice->lista_adj = NULL;
   }
-  
+
   return g;
 }
 
@@ -177,7 +176,7 @@ queue_grafo_t *verifica_se_elemento_esta_no_grafo(char *v1, char *v2,
       lista_adj_t *aux2 = aux->lista_adj;
       // Verifica se o v2 já existe na lista de adjacência do v1
 
-      if(strlen(v2) > 0){
+      if (strlen(v2) > 0) {
         do {
           printf("Verificando se v2 = %s está na lista de adjacencia de v1 = "
                  "%s\n",
@@ -206,7 +205,7 @@ queue_grafo_t *verifica_se_elemento_esta_no_grafo(char *v1, char *v2,
 
 queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
 
-  if(strlen(v2) == 0){
+  if (strlen(v2) == 0) {
     printf("V2 é 0\n");
   }
 
@@ -231,7 +230,7 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
 
       // Caso o vértice v2 já exista no grafo, verifica se o v1 existe em sua
       // lista de adj
-      if(strlen(v2) > 0)
+      if (strlen(v2) > 0)
         aux = verifica_se_elemento_esta_no_grafo(v2, v1, aux, &v2_esta_grafo);
 
       aux = aux->next;
@@ -470,25 +469,23 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
   return g;
 }
 
-
-
 //------------------------------------------------------------------------------
 // lê um vertice
 
-vertice le_vertice(void) { 
+vertice le_vertice(void) {
   printf("Escolha um vértice: \n");
 
-  //fflush(stdin);
-  vertice *vertice_t = (vertice *) malloc(sizeof(vertice));
-  //fscanf(stdin, "%s", vertice_t->id);
+  // fflush(stdin);
+  vertice *vertice_t = (vertice *)malloc(sizeof(vertice));
+  // fscanf(stdin, "%s", vertice_t->id);
   fflush(stdin);
-  //scanf("%s", vertice_t->id);
+  // scanf("%s", vertice_t->id);
   fgets(vertice_t->id, STRING_SIZE, stdin);
 
   printf("Vértice lido: %s\n", vertice_t->id);
 
   return *vertice_t;
-  //return (vertice)NULL; 
+  // return (vertice)NULL;
 }
 
 //------------------------------------------------------------------------------
@@ -518,7 +515,7 @@ double coeficiente_proximidade(queue_grafo_t *g, char *v) {
 
   printf("i = %f sum = %f\n", i, sum);
 
-  if(sum == 0.0){
+  if (sum == 0.0) {
     perror("A distância é 0, não é possível calcular!");
     return 0;
   }
