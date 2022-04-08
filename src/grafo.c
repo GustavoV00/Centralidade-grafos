@@ -65,12 +65,13 @@ void print_fila_adj(void *ptr) {
 
 typedef struct grafo *grafo;
 
+
 //------------------------------------------------------------------------------
 // (apontador para) estrutura de dados para representar um vértice
 //
 // o vértice tem um nome, que é uma "string"
 
-typedef struct vertice *vertice;
+//typedef struct vertice *vertice;
 
 //------------------------------------------------------------------------------
 // desaloca toda a memória usada em *g
@@ -79,7 +80,19 @@ typedef struct vertice *vertice;
 //         ou
 //         0, caso contrário
 
-// int destroi_grafo(queue_grafo_t g) { return g == NULL; }
+int destroi_grafo(queue_grafo_t *g) {
+  while (g) {
+    while (g->lista_adj) {
+      queue_remove((queue_t **)&g->lista_adj, (queue_t *)g->lista_adj);
+    }
+    queue_remove((queue_t **)&g, (queue_t *)g);
+  }
+
+  if (g == NULL) {
+    return 1;
+  }
+  return 0;
+}
 
 queue_grafo_t *inicia_novo_vertice(char *v) {
 
@@ -457,22 +470,26 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
   return g;
 }
 
-/*
-queue_grafo_t *busca_em_largura(queue_grafo_t *g, , char *v){
-  //percorre todos os vértices e seta o estado como 0
-  queue_grafo_t *aux = grafo ;
-  do {
-    aux->estado = 0;
-  } while (aux != grafo);
 
-  busca_em_largura_vertice(g, v);
-}
-*/
 
 //------------------------------------------------------------------------------
 // lê um vertice
 
-// vertice le_vertice(void) { return (vertice)NULL; }
+vertice le_vertice(void) { 
+  printf("Escolha um vértice: \n");
+
+  //fflush(stdin);
+  vertice *vertice_t = (vertice *) malloc(sizeof(vertice));
+  //fscanf(stdin, "%s", vertice_t->id);
+  fflush(stdin);
+  //scanf("%s", vertice_t->id);
+  fgets(vertice_t->id, STRING_SIZE, stdin);
+
+  printf("Vértice lido: %s\n", vertice_t->id);
+
+  return *vertice_t;
+  //return (vertice)NULL; 
+}
 
 //------------------------------------------------------------------------------
 // devolve o coeficiente de proximidade do vértice v de g

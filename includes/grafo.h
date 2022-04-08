@@ -13,11 +13,9 @@
 //
 // o vértice tem um nome, que é uma "string"
 
-typedef struct vertice_t {
-  char *id;
-  int indice;
-
-} vertice_t;
+typedef struct vertice {
+   char *id;
+} vertice;
 
 typedef struct lista_adj_t {
   struct lista_adj_t *prev;
@@ -56,7 +54,7 @@ void print_fila(void *ptr);
 //         ou
 //         0, caso contrário
 
-int destroi_grafo(queue_grafo_t g);
+//int destroi_grafo(queue_grafo_t g);
 
 //------------------------------------------------------------------------------
 // lê um grafo de input.
@@ -71,7 +69,7 @@ queue_grafo_t *le_grafo(FILE *input);
 //------------------------------------------------------------------------------
 // pede para o usuário entrar com um vértice.
 
-vertice_t le_vertice(void);
+vertice le_vertice(void);
 
 //------------------------------------------------------------------------------
 // escreve o grafo g em output, no mesmo formato que o usado por le_grafo()
