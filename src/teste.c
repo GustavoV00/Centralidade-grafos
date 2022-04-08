@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 int main(void) {
-  vertice_t v;
+  //   vertice_t v;
   double coef;
 
   queue_grafo_t *grafo = le_grafo(stdin);
@@ -30,6 +30,8 @@ int main(void) {
 
   //   printf("O coeficiente de proximidade é %f\n", coef);
 
-  // return !destroi_grafo(g);
-  return 0;
+  int result = destroi_grafo(grafo);
+  if (result == 1)
+    return 0;
+  return 1;
 }
