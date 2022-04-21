@@ -6,29 +6,6 @@
 #include <stdio.h>
 
 /**
-* Removes the first element
-*
-* @param[in] queue Queue of elements
-* @param[in] elem The elem to be removed from the queue
-*/
-
-// int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem){
-//   printf("Retirando primeiro elemento da fila...\n");
-//   if (*queue == NULL) {
-//     perror("Erro ao remover primeiro elemento da fila: NULL!\n");
-//     return -1;
-//   }
-
-//   printf("aqui\n");
-
-//   elem = *(queue);
-//   //printf("Elem: %s\n", elem->vertice)
-
-//   printf("Chamando queue_remove...\n");
-//   return queue_remove(queue, elem);
-// }
-
-/**
  * Appends a element to the queue
  *
  * @param[in] queue Queue of elements

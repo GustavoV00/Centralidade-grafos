@@ -400,6 +400,7 @@ queue_grafo_t *busca_vertice_id(queue_grafo_t *g, char *vertice) {
   } while (aux != g);
 
   fprintf(stderr, "Falha ao encontrar vertice %s!\n", vertice);
+  exit(-1);
   return NULL;
 }
 
@@ -570,7 +571,7 @@ double coeficiente_proximidade(queue_grafo_t *g, char *v) {
     printf("#########################\n");
     printf("vertice: %s\n", aux->vertice);
     printf("estado: %d\n", aux->estado);
-    printf("distancia de v %s: %d\n", v, aux->distancia);
+    printf("distancia de %s até %s: %d\n", aux->vertice, v, aux->distancia);
 
     //somatório das distâncias
     sum += aux->distancia;
@@ -581,7 +582,7 @@ double coeficiente_proximidade(queue_grafo_t *g, char *v) {
     aux = aux->next;
   } while (aux != g);
 
-  printf("i = %f sum = %f\n", i, sum);
+  printf("n = %f somatório = %f\n", i, sum);
 
   if (sum == 0.0) {
     perror("A distância é 0, não é possível calcular!");
