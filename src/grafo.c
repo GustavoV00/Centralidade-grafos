@@ -14,7 +14,7 @@
 /**
 * Imprime as filas de adjacência de cada vértice
 *
-* @param[in] grafo Queue of elements
+* @param[in] grafo Grafo
 */
 void print_filas_adjacencia(queue_grafo_t *grafo) {
   queue_grafo_t *aux = grafo;
@@ -37,7 +37,7 @@ void print_filas_adjacencia(queue_grafo_t *grafo) {
 /**
 * Imprime a fila 
 *
-* @param[in] grafo Queue of elements
+* @param[in] ptr Grafo
 */
 void print_fila(void *ptr) {
 
@@ -51,6 +51,11 @@ void print_fila(void *ptr) {
   elem->prev ? printf("%s", elem->next->vertice) : printf("*");
 }
 
+/**
+* Imprime a lista de adjacência de um vértice
+*
+* @param[in] ptr Vértice
+*/
 void print_fila_adj(void *ptr) {
 
   struct lista_adj_t *elem = ptr;
@@ -73,13 +78,13 @@ typedef struct grafo *grafo;
 
 // typedef struct vertice *vertice;
 
-//------------------------------------------------------------------------------
-// desaloca toda a memória usada em *g
-//
-// devolve 1 em caso de sucesso,
-//         ou
-//         0, caso contrário
 
+/**
+* Desaloca a memória utilizada pelo grafo
+*
+* @param[in] g Grafo
+* 
+*/
 int destroi_grafo(queue_grafo_t *g) {
   while (g) {
     while (g->lista_adj) {
@@ -94,6 +99,11 @@ int destroi_grafo(queue_grafo_t *g) {
   return 0;
 }
 
+/**
+* Aloca memória para um novo vértice que vai fazer parte da lista que representa o grafo
+*
+* @param[in] v1 Nome do vértice
+*/
 queue_grafo_t *inicia_novo_vertice(char *v) {
 
   queue_grafo_t *novo_vertice = (queue_grafo_t *)malloc(sizeof(queue_grafo_t));
@@ -104,6 +114,11 @@ queue_grafo_t *inicia_novo_vertice(char *v) {
   return novo_vertice;
 }
 
+/**
+* Inicia um item da lista de adjacência que cada vértice vai possuir
+*
+* @param[in] v1 Nome do vértice
+*/
 lista_adj_t *inicia_nova_lista(char *v) {
 
   lista_adj_t *nova_lista_adj = (lista_adj_t *)malloc(sizeof(lista_adj_t));
@@ -114,6 +129,17 @@ lista_adj_t *inicia_nova_lista(char *v) {
   return nova_lista_adj;
 }
 
+/**
+* Adiciona primeiro vértice quando a lista que representa o grafo é vazia (nula)
+*
+* @param[in] g Grafo
+* @param[in] novo_vertice Novo vértice a ser adicionado (v1)
+* @param[in] novo_vertice2 Novo vértice a ser adicionado (v2)
+* @param[in] nova_lista_adj  Lista de adj. do vértice v1
+* @param[in] nova_lista_adj2  Lista de adj. do vértice v2
+* @param[in] v1 Nome do primeiro vértice da linha
+* @param[in] v2 Nome do segundo vértice da linha
+*/
 queue_grafo_t *adicionar_no_grafo_nulo(queue_grafo_t *g,
                                        queue_grafo_t *novo_vertice,
                                        queue_grafo_t *novo_vertice2,
@@ -121,7 +147,6 @@ queue_grafo_t *adicionar_no_grafo_nulo(queue_grafo_t *g,
                                        lista_adj_t *nova_lista_adj2, char *v1,
                                        char *v2) {
 
-  //printf("Estou aqui: %s e %s\n", v1, v2);
   strcpy(novo_vertice->vertice, v1);
   strcpy(nova_lista_adj->vertice, v2);
   queue_append((queue_t **)&g, (queue_t *)novo_vertice);
@@ -144,8 +169,15 @@ queue_grafo_t *adicionar_no_grafo_nulo(queue_grafo_t *g,
   return g;
 }
 
-// Os parametros v1 e v2 são trocados, dependendo se v1 ou v2 que está sendo
-// inserido
+/**
+* Adiciona um novo vértice na lista que representa o grafo.
+*
+* @param[in] g Grafo
+* @param[in] v1 Nome do primeiro vértice da linha
+* @param[in] v2 Nome do segundo vértice da linha
+* @param[in] novo_vertice Novo vértice a ser adicionado
+* @param[in] nova_lista_adj  Lista de adj. do vértice
+*/
 queue_grafo_t *adiciona_novo_vertice_grafo(queue_grafo_t *g, char *v1, char *v2,
                                            queue_grafo_t *novo_vertice,
                                            lista_adj_t *nova_lista_adj) {
@@ -166,6 +198,15 @@ queue_grafo_t *adiciona_novo_vertice_grafo(queue_grafo_t *g, char *v1, char *v2,
   return g;
 }
 
+/**
+* Verifica se os vértices v1 e v2 existem na fila e adiciona v1 na lista de adj
+* de v2 e vice-versa (auxiliar).
+*
+* @param[in] v1 Nome do primeiro vértice da linha
+* @param[in] v2 Nome do segundo vértice da linha
+* @param[in] aux Grafo
+* @param[in] v_esta_grafo Retorna se v1 está no grafo
+*/
 queue_grafo_t *verifica_se_elemento_esta_no_grafo(char *v1, char *v2,
                                                   queue_grafo_t *aux,
                                                   int *v_esta_grafo) {
@@ -173,7 +214,7 @@ queue_grafo_t *verifica_se_elemento_esta_no_grafo(char *v1, char *v2,
     if (strcmp(aux->vertice, v1) == 0) {
       *v_esta_grafo = 1;
       printf("V1 está no grafo!\n");
-      printf("Elemento aux: %s igual ao v1: %s\n", aux->vertice, v1);
+      //printf("Elemento aux: %s igual ao v1: %s\n", aux->vertice, v1);
       int precisa_adicionar = 1;
       lista_adj_t *aux2 = aux->lista_adj;
       // Verifica se o v2 já existe na lista de adjacência do v1
@@ -191,6 +232,7 @@ queue_grafo_t *verifica_se_elemento_esta_no_grafo(char *v1, char *v2,
           aux2 = aux2->next;
         } while (aux2 != NULL && aux2 != aux->lista_adj);
 
+        //adiciona v2 na lista de adj de v1
         if (precisa_adicionar) {
           lista_adj_t *nova_lista_aux = inicia_nova_lista(v2);
           printf("Precisa adicionar v2 = %s na lista de adj de v1 = %s\n", v2,
@@ -205,41 +247,42 @@ queue_grafo_t *verifica_se_elemento_esta_no_grafo(char *v1, char *v2,
   return aux;
 }
 
+/**
+* Verifica se os vértices v1 e v2 existem na fila e adiciona v1 na lista de adj
+* de v2 e vice-versa.
+*
+* @param[in] v1 Nome do primeiro vértice da linha
+* @param[in] v2 Nome do segundo vértice da linha
+* @param[in] g Grafo
+*/
 queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
 
-  if (strlen(v2) == 0) {
-    printf("V2 é 0\n");
-  }
-
+  //aloca structs dos vértices
   queue_grafo_t *novo_vertice = inicia_novo_vertice(v1);
   queue_grafo_t *novo_vertice2 = inicia_novo_vertice(v2);
   lista_adj_t *nova_lista_adj = inicia_nova_lista(v1);
   lista_adj_t *nova_lista_adj2 = inicia_nova_lista(v2);
 
-  if (g != NULL) {
+  if (g != NULL) { //se já tiver vértice na lista (foi inicializada)
     queue_grafo_t *aux = g;
     int v1_esta_grafo = 0;
     int v2_esta_grafo = 0;
 
-    // Verifica se o indice v1 já não existe no grafo.
+    //verifica se v1 e v2 existem no grafo
     printf("Verificando se v1 = %s está no grafo...\n", v1);
     do {
-      //printf(" aux = %s\n", aux->vertice);
-      
-
       // Caso esse vértice v1 exista no grafo, verifico se o v2
       // Existe em sua lista de adjacência.
       aux = verifica_se_elemento_esta_no_grafo(v1, v2, aux, &v1_esta_grafo);
 
       // Caso o vértice v2 já exista no grafo, verifica se o v1 existe em sua
       // lista de adj
-      if (strlen(v2) > 0)
+      if (strlen(v2) > 0){
         aux = verifica_se_elemento_esta_no_grafo(v2, v1, aux, &v2_esta_grafo);
+      }
 
       aux = aux->next;
     } while (aux != g);
-
-    printf("Saiu da procura do V1!\n");
 
     // se v1 não estiver no grafo -> adiciona
     if (v1_esta_grafo == 0){
@@ -253,18 +296,24 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
       g = adiciona_novo_vertice_grafo(g, v2, v1, novo_vertice2,
                                       nova_lista_adj2);
     }
-    //printf("Sai do aux\n");
 
     return g;
   }
 
-  // Caso em que o elemento é nulo.
+  //caso em que seja o primeiro elemento da lista
   g = adicionar_no_grafo_nulo(g, novo_vertice, novo_vertice2, nova_lista_adj,
                               nova_lista_adj2, v1, v2);
 
   return g;
 }
 
+/**
+* Pega a linha que contém os dois vértices e separa em v1 e v2.
+*
+* @param[in] v1 Nome do primeiro vértice da linha
+* @param[in] v2 Nome do segundo vértice da linha
+* @param[in] v Linha com os dois vértices
+*/
 void separa_vertices(char *v1, char *v2, char *v) {
 
   int i = 0;
@@ -288,57 +337,60 @@ void separa_vertices(char *v1, char *v2, char *v) {
   }
 }
 
-//------------------------------------------------------------------------------
-// lê um grafo
-//
-// devolve o grafo lido,
-//         ou
-//         NULL, em caso de erro
-
+/**
+* Lê o grafo de stdin e coloca numa fila
+*
+* @param[in] input stdin
+*/
 queue_grafo_t *le_grafo(FILE *input) {
   queue_grafo_t *grafo = NULL;
   FILE *f = input;
   char *v = malloc(2050 * sizeof(char));
-  int i = 0;
+  //int i = 0;
+
+  //le todas as linhas
   while (fgets(v, 2050, f) != NULL) {
     if (v[0] != '\n') {
       char *v1 = malloc(STRING_SIZE * sizeof(char));
       char *v2 = malloc(STRING_SIZE * sizeof(char));
+
+      //separa o vertice v1 e v2 na linha
       separa_vertices(v1, v2, v);
       printf("%s e %s\n", v1, v2);
-      //printf("%lu e %lu\n", strlen(v1), strlen(v2));
 
-      printf(
-          "**************************************************************\n");
-      //printf("Passo: %d\n", i);
-      // printf("len v1 = %lu len v2 = %lu\n", strlen(v1), strlen(v2));
-      // printf("\n");
-      // se tem v1 e v2 -> verificar se já existe vértice v1 e v2 e
-      // criar uma aresta entre v1 e v2 (na vizinhança dos dois)
-      // se tem apenas v1 = vértice isolado
+      printf("**************************************************************\n");
+  
+      //se ñ tem v1 na fila -> adiciona
+      //se ñ tem v2 na fila -> adiciona
 
+      //se ñ tem v2 na fila de adj de v1 -> adiciona
+      //se ñ tem v1 na fila de adj de v2 -> adiciona
       grafo = inclui_nodo_na_fila(v1, v2, grafo);
+
+      //imprime para acompanhamento
       queue_print("Fila ", (queue_t *)grafo, print_fila);
       print_filas_adjacencia(grafo);
 
-      printf(
-          "**************************************************************\n");
+      printf("**************************************************************\n");
     }
-    i += 1;
+    //i += 1;
   }
 
   queue_print("\n\n Grafo ao final da leitura ", (queue_t *)grafo, print_fila);
   print_filas_adjacencia(grafo);
-
-  // printf("\n");
 
   free(v);
   fclose(f);
   return grafo;
 }
 
+/**
+* Procura um vértice na lista que representa o grafo utilizando seu "nome"
+*
+* @param[in] g Grafo
+* @param[in] r Nome do vértice que está sendo procurado
+*/
 queue_grafo_t *busca_vertice_id(queue_grafo_t *g, char *vertice) {
-  //printf("Procurando vertice %s...\n", vertice);
   queue_grafo_t *aux = g;
   do {
     if (strcmp(aux->vertice, vertice) == 0) {
@@ -498,28 +550,34 @@ vertice le_vertice(void) {
   // return (vertice)NULL;
 }
 
-//------------------------------------------------------------------------------
-// devolve o coeficiente de proximidade do vértice v de g
-//
-
+/**
+* Percorre a árvore de caminhos mínimos e calcula o coeficiente de proximidade baseado no vértice v
+*
+* @param[in] g Grafo
+* @param[in] r Nome do vértice base
+*/
 double coeficiente_proximidade(queue_grafo_t *g, char *v) {
   printf("\n\n\n\n\nProcurando coeficiente_proximidade do vértice %s\n", v);
 
   g = caminhos_minimos(g, v);
 
   printf("\n\n\n\nÁrvore de caminhos mínimos:\n");
-  // percorre o grafo imprimindo
+  // percorre o grafo
   queue_grafo_t *aux = g;
   double i = 0;
   double sum = 0;
   do {
-    printf("####\n");
+    printf("#########################\n");
     printf("vertice: %s\n", aux->vertice);
     printf("estado: %d\n", aux->estado);
-    printf("distancia: %d\n", aux->distancia);
+    printf("distancia de v %s: %d\n", v, aux->distancia);
 
+    //somatório das distâncias
     sum += aux->distancia;
+
+    //somatório de n
     i += 1;
+
     aux = aux->next;
   } while (aux != g);
 
@@ -529,6 +587,8 @@ double coeficiente_proximidade(queue_grafo_t *g, char *v) {
     perror("A distância é 0, não é possível calcular!");
     return 0;
   }
+
+  //n / somatório das distâncias
   double result = i / sum;
 
   return result;
