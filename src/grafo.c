@@ -1,3 +1,7 @@
+// TRAB2 IA - 2021-2
+// GUSTAVO VALENTE NUNES GRR20182557
+// BRUNO EDUARDO FARIAS GRR20186715
+
 #include "../includes/grafo.h"
 #include "../includes/queue.h"
 #include <ctype.h>
@@ -7,6 +11,11 @@
 #define SIZE 30
 #define STRING_SIZE 1024
 
+/**
+* Imprime as filas de adjacência de cada vértice
+*
+* @param[in] grafo Queue of elements
+*/
 void print_filas_adjacencia(queue_grafo_t *grafo) {
   queue_grafo_t *aux = grafo;
   do {
@@ -25,6 +34,11 @@ void print_filas_adjacencia(queue_grafo_t *grafo) {
   } while (aux != grafo);
 }
 
+/**
+* Imprime a fila 
+*
+* @param[in] grafo Queue of elements
+*/
 void print_fila(void *ptr) {
 
   struct queue_grafo_t *elem = ptr;
@@ -33,11 +47,6 @@ void print_fila(void *ptr) {
 
   elem->prev ? printf("%s", elem->prev->vertice) : printf("*");
   printf("<%s>", elem->vertice);
-  // printf("[ ");
-  // for (int i = 0; i < elem->vertice.indice; i++) {
-  //   printf("%s ", elem->lista_adj);
-  // }
-  // printf("]\n");
 
   elem->prev ? printf("%s", elem->next->vertice) : printf("*");
 }
@@ -47,14 +56,7 @@ void print_fila_adj(void *ptr) {
   struct lista_adj_t *elem = ptr;
   if (!elem)
     return;
-  // elem->prev ? printf("%s", elem->prev->vertice) : printf("*");
   printf("%s, ", elem->vertice);
-  // printf("[ ");
-  // for (int i = 0; i < elem->vertice.indice; i++) {
-  //   printf("%s ", elem->lista_adj);
-  // }
-  // printf("]\n");
-  // elem->prev ? printf("%s", elem->next->vertice) : printf("*");
 }
 
 //------------------------------------------------------------------------------
@@ -119,7 +121,7 @@ queue_grafo_t *adicionar_no_grafo_nulo(queue_grafo_t *g,
                                        lista_adj_t *nova_lista_adj2, char *v1,
                                        char *v2) {
 
-  printf("Estou aqui: %s e %s\n", v1, v2);
+  //printf("Estou aqui: %s e %s\n", v1, v2);
   strcpy(novo_vertice->vertice, v1);
   strcpy(nova_lista_adj->vertice, v2);
   queue_append((queue_t **)&g, (queue_t *)novo_vertice);
@@ -133,7 +135,7 @@ queue_grafo_t *adicionar_no_grafo_nulo(queue_grafo_t *g,
                (queue_t *)nova_lista_adj2);
 
   // novo_vertice2->lista_adj = nova_lista_adj2;
-  queue_print("Fila: \n", (queue_t *)g, print_fila);
+  queue_print("Fila: ", (queue_t *)g, print_fila);
   queue_print("Lista_adj1: ", (queue_t *)nova_lista_adj, print_fila_adj);
   queue_print("Lista_adj2: ", (queue_t *)nova_lista_adj2, print_fila_adj);
 
@@ -148,7 +150,7 @@ queue_grafo_t *adiciona_novo_vertice_grafo(queue_grafo_t *g, char *v1, char *v2,
                                            queue_grafo_t *novo_vertice,
                                            lista_adj_t *nova_lista_adj) {
 
-  printf("Adicionando v1 = %s no grafo\n", v1);
+  printf("Adicionando v = %s no grafo\n", v1);
 
   strcpy(novo_vertice->vertice, v1);
   queue_append((queue_t **)&g, (queue_t *)novo_vertice);
@@ -220,9 +222,10 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
     int v2_esta_grafo = 0;
 
     // Verifica se o indice v1 já não existe no grafo.
+    printf("Verificando se v1 = %s está no grafo...\n", v1);
     do {
-      printf(" aux = %s\n", aux->vertice);
-      printf("Verificando se v1 = %s está no grafo...\n", v1);
+      //printf(" aux = %s\n", aux->vertice);
+      
 
       // Caso esse vértice v1 exista no grafo, verifico se o v2
       // Existe em sua lista de adjacência.
@@ -239,14 +242,18 @@ queue_grafo_t *inclui_nodo_na_fila(char *v1, char *v2, queue_grafo_t *g) {
     printf("Saiu da procura do V1!\n");
 
     // se v1 não estiver no grafo -> adiciona
-    if (v1_esta_grafo == 0)
+    if (v1_esta_grafo == 0){
+      printf("v1 = %s não está no grafo!\n", v1);
       g = adiciona_novo_vertice_grafo(g, v1, v2, novo_vertice, nova_lista_adj);
+    }
 
     // se v2 não estiver no grafo -> adiciona
-    if (strlen(v2) > 0 && v2_esta_grafo == 0)
+    if (strlen(v2) > 0 && v2_esta_grafo == 0){
+      printf("v2 = %s não está no grafo!\n", v2);
       g = adiciona_novo_vertice_grafo(g, v2, v1, novo_vertice2,
                                       nova_lista_adj2);
-    printf("Sai do aux\n");
+    }
+    //printf("Sai do aux\n");
 
     return g;
   }
@@ -299,11 +306,11 @@ queue_grafo_t *le_grafo(FILE *input) {
       char *v2 = malloc(STRING_SIZE * sizeof(char));
       separa_vertices(v1, v2, v);
       printf("%s e %s\n", v1, v2);
-      printf("%lu e %lu\n", strlen(v1), strlen(v2));
+      //printf("%lu e %lu\n", strlen(v1), strlen(v2));
 
       printf(
           "**************************************************************\n");
-      printf("Passo: %d\n", i);
+      //printf("Passo: %d\n", i);
       // printf("len v1 = %lu len v2 = %lu\n", strlen(v1), strlen(v2));
       // printf("\n");
       // se tem v1 e v2 -> verificar se já existe vértice v1 e v2 e
@@ -311,7 +318,7 @@ queue_grafo_t *le_grafo(FILE *input) {
       // se tem apenas v1 = vértice isolado
 
       grafo = inclui_nodo_na_fila(v1, v2, grafo);
-      queue_print("Elementos inseridos: ", (queue_t *)grafo, print_fila);
+      queue_print("Fila ", (queue_t *)grafo, print_fila);
       print_filas_adjacencia(grafo);
 
       printf(
@@ -320,7 +327,8 @@ queue_grafo_t *le_grafo(FILE *input) {
     i += 1;
   }
 
-  // queue_print("Elementos inseridos: ", (queue_t *)grafo, print_fila);
+  queue_print("\n\n Grafo ao final da leitura ", (queue_t *)grafo, print_fila);
+  print_filas_adjacencia(grafo);
 
   // printf("\n");
 
@@ -330,7 +338,7 @@ queue_grafo_t *le_grafo(FILE *input) {
 }
 
 queue_grafo_t *busca_vertice_id(queue_grafo_t *g, char *vertice) {
-  printf("Procurando vertice %s...\n", vertice);
+  //printf("Procurando vertice %s...\n", vertice);
   queue_grafo_t *aux = g;
   do {
     if (strcmp(aux->vertice, vertice) == 0) {
@@ -343,16 +351,17 @@ queue_grafo_t *busca_vertice_id(queue_grafo_t *g, char *vertice) {
   return NULL;
 }
 
+/**
+* Roda o algoritmo de caminhos mínimos utilizando busca em largura (conforme visto em sala)
+*
+* @param[in] g Grafo
+* @param[in] r Vértice
+*/
 queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
-
-  // verificar algoritmo de caminhos mínimos
-
   // V <- fila vazia
   queue_grafo_t *V = NULL;
 
-  printf("Fila vazia iniciada!\n");
-
-  // procura o vértice r no grafo
+  // procura o vértice r na lista que representa o grafo
   queue_grafo_t *aux = busca_vertice_id(g, r);
   if (aux == NULL) {
     perror("Falha o encontrar vértice raiz no grafo!");
@@ -370,7 +379,7 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
   queue_append((queue_t **)&V, (queue_t *)novo_vertice);
   printf("Enfileirou a raiz em V!\n");
 
-  queue_print("Fila: ", (queue_t *)V, print_fila);
+  queue_print("V: ", (queue_t *)V, print_fila);
 
   aux->estado = 1;
   aux->distancia = 0;
@@ -381,7 +390,6 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
     // retirar um vertice v da fila
     queue_grafo_t *v = V;
 
-    // queue_remove estava dando problema
     // remove sempre o primeiro elemento
     if (queue_size((queue_t *)V) == 1) {
       V = NULL;
@@ -399,7 +407,7 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
     }
 
     printf("Removeu vértice %s da fila!\n", v->vertice);
-    queue_print("Fila: ", (queue_t *)V, print_fila);
+    queue_print("V: ", (queue_t *)V, print_fila);
 
     printf("Procurando vértice %s no grafo...\n", v->vertice);
     v = busca_vertice_id(g, v->vertice);
@@ -429,7 +437,7 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
         return g;
       }
 
-      printf("Encontrou w = %s no grafo!\n", auxx->vertice);
+      //printf("Encontrou w = %s no grafo!\n", auxx->vertice);
 
       if (auxx->estado == 0) {
         printf("w = %s está no estado 0!\n", auxx->vertice);
@@ -446,9 +454,9 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
         queue_grafo_t *novo_vertice2 = inicia_novo_vertice(auxx->vertice);
         strcpy(novo_vertice2->vertice, auxx->vertice);
         queue_append((queue_t **)&V, (queue_t *)novo_vertice2);
-        printf("Enfileirou w = %s na fila!\n", auxx->vertice);
+        printf("-> Enfileirou w = %s na fila!\n", auxx->vertice);
 
-        queue_print("Fila: ", (queue_t *)V, print_fila);
+        queue_print("V ", (queue_t *)V, print_fila);
 
         auxx->estado = 1;
         printf("Setou o estado de w = %s para 1\n", auxx->vertice);
@@ -463,8 +471,10 @@ queue_grafo_t *caminhos_minimos(queue_grafo_t *g, char *r) {
     v->estado = 2;
 
     printf("Setou o estado de %s para 2!\n", v->vertice);
-    queue_print("Fila: ", (queue_t *)V, print_fila);
+    queue_print("V: ", (queue_t *)V, print_fila);
   }
+
+  printf("Fila V vazia! Fim do algoritmo de caminhos mínimos!\n");
 
   return g;
 }

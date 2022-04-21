@@ -1,25 +1,32 @@
-// TRAB1 IA - 2021-2
+// TRAB2 IA - 2021-2
 // GUSTAVO VALENTE NUNES GRR20182557
 // BRUNO EDUARDO FARIAS GRR20186715
 
 #include "../includes/queue.h"
 #include <stdio.h>
 
-int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem){
-  printf("Retirando primeiro elemento da fila...\n");
-  if (*queue == NULL) {
-    perror("Erro ao remover primeiro elemento da fila: NULL!\n");
-    return -1;
-  }
+/**
+* Removes the first element
+*
+* @param[in] queue Queue of elements
+* @param[in] elem The elem to be removed from the queue
+*/
 
-  printf("aqui\n");
+// int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem){
+//   printf("Retirando primeiro elemento da fila...\n");
+//   if (*queue == NULL) {
+//     perror("Erro ao remover primeiro elemento da fila: NULL!\n");
+//     return -1;
+//   }
 
-  elem = *(queue);
-  //printf("Elem: %s\n", elem->vertice)
+//   printf("aqui\n");
 
-  printf("Chamando queue_remove...\n");
-  return queue_remove(queue, elem);
-}
+//   elem = *(queue);
+//   //printf("Elem: %s\n", elem->vertice)
+
+//   printf("Chamando queue_remove...\n");
+//   return queue_remove(queue, elem);
+// }
 
 /**
  * Appends a element to the queue
@@ -177,52 +184,3 @@ int queue_size(queue_t *queue) {
     return tamanhoFila;
   }
 }
-
-/**
- * Verifies if a queue is correct
- *
- * @param[in] fila Queue of elements
- */
-// int fila_correta(queue_state_t *fila) {
-//   queue_state_t *aux;
-
-//   // a empty queue is always correct
-//   if (!fila)
-//     return 1;
-
-//   // a queue with only one element is correct
-//   if ((fila->next == fila) && (fila->prev == fila))
-//     return 1;
-
-//   // queue with only one element but incorrect
-//   if ((fila->next == fila) || (fila->prev == fila)) {
-//     printf("ERRO: ponteiros errados na fila com um elemento\n");
-//     return 0;
-//   }
-
-//   // if the queue has more than one: go through and check one by one
-//   aux = fila;
-//   do {
-//     // tests next pointer
-//     if (aux->next && (aux->next->prev == aux))
-//       ; // ponteiro ok
-//     else {
-//       // printf("ERRO: ponteiros errados ->next ou ->next->prev\n");
-//       perror("Error: wrong pointers ->next or ->next->prev");
-//       return 0;
-//     }
-
-//     // tests prev pointer
-//     if (aux->prev && (aux->prev->next == aux))
-//       ; // ponteiro ok
-//     else {
-//       // printf("ERRO: ponteiros errados ->prev ou ->prev->next\n");
-//       perror("Error: wrong pointers ->prev or ->prev->next");
-//       return 0;
-//     }
-//     aux = aux->next;
-//   } while (aux != fila);
-
-//   // returns 1 if ok
-//   return 1;
-// }

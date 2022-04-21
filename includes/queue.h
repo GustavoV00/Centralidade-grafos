@@ -1,17 +1,9 @@
-// TRAB1 IA - 2021-2
+// TRAB2 IA - 2021-2
 // GUSTAVO VALENTE NUNES GRR20182557
 // BRUNO EDUARDO FARIAS GRR20186715
 
 #ifndef __QUEUE__
 #define __QUEUE__
-
-/*
-#ifndef NULL
-#define NULL ((void *)0)
-#endif
-*/
-
-
 
 //------------------------------------------------------------------------------
 // estrutura de uma fila genérica, sem conteúdo definido.
@@ -22,7 +14,7 @@ typedef struct queue_t {
   struct queue_t *next; // aponta para o elemento seguinte na fila
 } queue_t;
 
-int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem);
+//int retirar_primeiro_elemento_queue(queue_t **queue, queue_t *elem);
 
 //------------------------------------------------------------------------------
 // Conta o numero de elementos na fila
@@ -59,6 +51,5 @@ int queue_append(queue_t **queue, queue_t *elem);
 // Retorno: 0 se sucesso, <0 se ocorreu algum erro
 
 int queue_remove(queue_t **queue, queue_t *elem);
-// int fila_correta(queue_state_t *fila);
 
 #endif
