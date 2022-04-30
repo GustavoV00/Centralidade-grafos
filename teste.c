@@ -2,7 +2,7 @@
 // GUSTAVO VALENTE NUNES GRR20182557
 // BRUNO EDUARDO FARIAS GRR20186715
 
-#include "../includes/grafo.h"
+#include "grafo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +12,9 @@
 //------------------------------------------------------------------------------
 
 int main(int argc, char const *argv[]) {
+
+  //entrada no estilo ./grafo -i arquivo_entrada -v vertice
+
   if (argc < 5) {
     fprintf(stderr, "ENTRADA INCORRETA!\n\n\n");
     fprintf(stderr, "USO: ./grafo -i <nome_arquivo_grafo> -v <vertice>\n");
@@ -41,7 +44,7 @@ int main(int argc, char const *argv[]) {
 
   FILE *arquivo = fopen(nomeArquivo, "r");
 
-  // faz a leitura do grafo de stdin
+  // faz a leitura do grafo
   grafo *g = le_grafo(arquivo);
 
   // printf("\n\nVertice = %s\n", v);
@@ -53,8 +56,9 @@ int main(int argc, char const *argv[]) {
 
   free(nomeArquivo);
   free(v);
+  fclose(arquivo);
 
-  // desaloca a memória usada
+  // libera a memória usada
   int result = destroi_grafo(g);
   if (result == 1)
     return 0;

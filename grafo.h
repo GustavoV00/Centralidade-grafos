@@ -8,16 +8,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-//------------------------------------------------------------------------------
-// (apontador para) estrutura de dados para representar um grafo
-//
-// o grafo tem um nome, que é uma "string"
-
-//------------------------------------------------------------------------------
-// (apontador para) estrutura de dados para representar um vértice
-//
-// o vértice tem um nome, que é uma "string"
-
 typedef struct vertice {
   char *id;
 } vertice;
@@ -30,8 +20,8 @@ typedef struct lista_adj_t {
 } lista_adj_t;
 
 // Em vez de utilizar uma matriz para representar o
-// grafo, estou utilizando uma fila. Sendo que cada nodo
-// dessa lista, é  eferente a um id. a, b, c, ..., z
+// grafo, estamos utilizando uma fila. Sendo que cada nodo
+// dessa lista, é referente a um id. a, b, c, ..., z
 typedef struct grafo {
   struct grafo *prev;
   struct grafo *next;
@@ -43,10 +33,7 @@ typedef struct grafo {
 
 } grafo;
 
-//------------------------------------------------------------------------------
-// estrutura de uma fila genérica, sem conteúdo definido.
-// Veja um exemplo de uso desta estrutura em testafila.c
-
+//fila genérica
 typedef struct queue_t {
   struct queue_t *prev; // aponta para o elemento anterior na fila
   struct queue_t *next; // aponta para o elemento seguinte na fila
@@ -108,8 +95,7 @@ int destroi_grafo(grafo *g);
 // um grafo é um arquivo onde cada linha tem zero, uma ou duas
 // strings (sequência de caracteres sem "whitespace").
 //
-// devolve o grafo lido. Caso o arquivo esteja mal formado o
-// comportamento da função é indefinido
+// devolve o grafo lido.
 
 grafo *le_grafo(FILE *input);
 
@@ -117,13 +103,6 @@ grafo *le_grafo(FILE *input);
 // pede para o usuário entrar com um vértice.
 
 vertice le_vertice(void);
-
-//------------------------------------------------------------------------------
-// escreve o grafo g em output, no mesmo formato que o usado por le_grafo()
-//
-// devolve o grafo escrito,
-//         ou
-//         NULL, em caso de erro
 
 //------------------------------------------------------------------------------
 // devolve o coeficiente de agrupamento de g
@@ -134,24 +113,48 @@ vertice le_vertice(void);
 double coeficiente_proximidade(grafo *g, char *v);
 
 //------------------------------------------------------------------------------
+//Imprime a lista de adjacência de um vértice
 void print_fila_adj(void *ptr);
 void print_filas_adjacencia(grafo *g);
+
+//Aloca memória para um novo vértice que vai fazer parte da lista que 
+//representa o grafo
 grafo *inicia_novo_vertice(char *v);
+
+//Inicia um item da lista de adjacência que cada vértice vai possuir
 lista_adj_t *inicia_nova_lista(char *v);
+
+//Adiciona primeiro vértice quando a lista que representa o grafo é vazia (nula)
 grafo *adicionar_no_grafo_nulo(grafo *g, grafo *novo_vertice,
                                grafo *novo_vertice2,
                                lista_adj_t *nova_lista_adj,
                                lista_adj_t *nova_lista_adj2, char *v1,
                                char *v2);
+
+//Adiciona um novo vértice na lista que representa o grafo.
 grafo *adiciona_novo_vertice_grafo(grafo *g, char *v1, char *v2,
                                    grafo *novo_vertice,
                                    lista_adj_t *nova_lista_adj);
 
+//Verifica se os vértices v1 e v2 existem na fila e adiciona v1 na lista de adj
+//de v2 e vice-versa (auxiliar).
 grafo *verifica_se_elemento_esta_no_grafo(char *v1, char *v2, grafo *aux,
                                           int *v_esta_grafo);
+
+//Verifica se os vértices v1 e v2 existem na fila e adiciona v1 na lista de adj
+//* de v2 e vice-versa.
 grafo *inclui_nodo_na_fila(char *v1, char *v2, grafo *g);
+
+//Pega a linha que contém os dois vértices e separa em v1 e v2.
 void separa_vertices(char *v1, char *v2, char *v);
+
+//Procura um vértice na lista que representa o grafo utilizando seu "nome"
 grafo *busca_vertice_id(grafo *g, char *vertice);
+
+//Roda o algoritmo de caminhos mínimos utilizando busca em largura (conforme
+// * visto em sala)
 grafo *caminhos_minimos(grafo *g, char *r);
+
+//Compara floats
 bool fequal(float a, float b);
 #endif

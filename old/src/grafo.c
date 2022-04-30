@@ -2,7 +2,7 @@
 // GUSTAVO VALENTE NUNES GRR20182557
 // BRUNO EDUARDO FARIAS GRR20186715
 
-#include "../includes/grafo.h"
+#include "grafo.h"
 #include <ctype.h>
 #include <float.h>
 #include <math.h>
@@ -13,6 +13,9 @@
 #define SIZE 30
 #define STRING_SIZE 1024
 
+/**
+* Compara floats
+*/
 bool fequal(float a, float b) { return fabs(a - b) < FLT_EPSILON; }
 
 /**
@@ -367,12 +370,9 @@ grafo *verifica_se_elemento_esta_no_grafo(char *v1, char *v2, grafo *aux,
 
       if (strlen(v2) > 0) {
         do {
-          // printf("Verificando se v2 = %s está na lista de adjacencia de v1 =
-          // "
-          // "%s\n",
-          // v2, v1);
+          // printf("Verificando se v2 = %s está na lista de adjacencia de v1 = %s\n", v2, v1);
           if (strcmp(aux2->vertice, v2) == 0) {
-            // printf("Estou na lista de adjacência\n");
+            //printf("Estou na lista de adjacência\n");
             precisa_adicionar = 0;
             break;
           }
@@ -382,8 +382,7 @@ grafo *verifica_se_elemento_esta_no_grafo(char *v1, char *v2, grafo *aux,
         // adiciona v2 na lista de adj de v1
         if (precisa_adicionar) {
           lista_adj_t *nova_lista_aux = inicia_nova_lista(v2);
-          // printf("Precisa adicionar v2 = %s na lista de adj de v1 = %s\n",
-          // v2, v1);
+          // printf("Precisa adicionar v2 = %s na lista de adj de v1 = %s\n", v2, v1);
           strcpy(nova_lista_aux->vertice, v2);
           queue_append((queue_t **)&aux->lista_adj, (queue_t *)nova_lista_aux);
           // printf("Adicionou v2 na lista de adj!\n");
@@ -493,7 +492,6 @@ grafo *le_grafo(FILE *input) {
   grafo *g = NULL;
   FILE *f = input;
   char *v = malloc(2050 * sizeof(char));
-  // int i = 0;
 
   // le todas as linhas
   while (fgets(v, 2050, f) != NULL) {
@@ -505,8 +503,7 @@ grafo *le_grafo(FILE *input) {
       separa_vertices(v1, v2, v);
       // printf("%s e %s\n", v1, v2);
 
-      // printf(
-      // "**************************************************************\n");
+      // printf("**************************************************************\n");
 
       // se ñ tem v1 na fila -> adiciona
       // se ñ tem v2 na fila -> adiciona
@@ -519,14 +516,12 @@ grafo *le_grafo(FILE *input) {
       // queue_print("Fila ", (queue_t *)g, print_fila);
       // print_filas_adjacencia(g);
 
-      // printf(
-      // "**************************************************************\n");
+      // printf("**************************************************************\n");
     }
-    // i += 1;
   }
 
-  // queue_print("\n\n Grafo ao final da leitura ", (queue_t *)g, print_fila);
-  // print_filas_adjacencia(g);
+  queue_print("\n\n Grafo ao final da leitura ", (queue_t *)g, print_fila);
+  print_filas_adjacencia(g);
 
   free(v);
   fclose(f);
@@ -600,10 +595,10 @@ grafo *caminhos_minimos(grafo *g, char *r) {
       grafo *aux1 = V->next;
       grafo *aux2 = V->prev;
 
-      // prev->next = v->next
+      // faz prev->next = v->next
       V->prev->next = aux1;
 
-      // next->prev = v->prev
+      // faz next->prev = v->prev
       V->next->prev = aux2;
 
       V = aux1;
@@ -645,11 +640,12 @@ grafo *caminhos_minimos(grafo *g, char *r) {
       if (auxx->estado == 0) {
         // printf("w = %s está no estado 0!\n", auxx->vertice);
 
-        // w->pai = v->vertice;
+        // faz w->pai = v->vertice;
         auxx->pai = malloc(strlen(v->vertice) * sizeof(char));
         strcpy(auxx->pai, v->vertice);
         // printf("Setou o pai de %s como %s\n", auxx->vertice, v->vertice);
 
+        //distancia é igual a distancia do pai + 1
         auxx->distancia = v->distancia + 1;
         // printf("distancia de %s é %d\n", auxx->vertice, auxx->distancia);
 
@@ -677,7 +673,7 @@ grafo *caminhos_minimos(grafo *g, char *r) {
     // queue_print("V: ", (queue_t *)V, print_fila);
   }
 
-  // printf("Fila V vazia! Fim do algoritmo de caminhos mínimos!\n");
+  //printf("Fila V vazia! Fim do algoritmo de caminhos mínimos!\n");
 
   return g;
 }
@@ -713,7 +709,7 @@ double coeficiente_proximidade(grafo *g, char *v) {
 
   g = caminhos_minimos(g, v);
 
-  // printf("\n\n\n\nÁrvore de caminhos mínimos:\n");
+  printf("\n\n\n\nÁrvore de caminhos mínimos:\n");
   // percorre o grafo
   grafo *aux = g;
   double i = 0;
