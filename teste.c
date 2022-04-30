@@ -56,7 +56,6 @@ int main(int argc, char const *argv[]) {
 
   free(nomeArquivo);
   free(v);
-  fclose(arquivo);
 
   // libera a memória usada
   int result = destroi_grafo(g);
