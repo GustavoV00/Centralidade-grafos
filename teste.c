@@ -13,12 +13,12 @@
 
 int main(int argc, char const *argv[]) {
 
-  //entrada no estilo ./grafo -i arquivo_entrada -v vertice
+  //entrada no estilo ./teste -i arquivo_entrada -v vertice
 
   if (argc < 5) {
     fprintf(stderr, "ENTRADA INCORRETA!\n\n\n");
-    fprintf(stderr, "USO: ./grafo -i <nome_arquivo_grafo> -v <vertice>\n");
-    fprintf(stderr, "Exemplo: ./grafo -i teste1.in -v b\n");
+    fprintf(stderr, "USO: ./teste -i <nome_arquivo_grafo> -v <vertice>\n");
+    fprintf(stderr, "Exemplo: ./teste -i teste1.in -v b\n");
     return -1;
   }
 
@@ -34,8 +34,8 @@ int main(int argc, char const *argv[]) {
     strcpy(v, argv[2]);
   } else {
     fprintf(stderr, "ENTRADA INCORRETA!\n\n\n");
-    fprintf(stderr, "USO: ./grafo -i <nome_arquivo_grafo> -v <vertice>\n");
-    fprintf(stderr, "Exemplo: ./grafo -i teste1.in -v b\n");
+    fprintf(stderr, "USO: ./teste -i <nome_arquivo_grafo> -v <vertice>\n");
+    fprintf(stderr, "Exemplo: ./teste -i teste1.in -v b\n");
     return -1;
   }
 
