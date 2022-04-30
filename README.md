@@ -15,15 +15,15 @@ requisitado pelo usuário.
 
 
 # Estrutura do projeto
-  src: Local onde fica os arquivos do tipo *.c
-    grafo.c: Nucleo de todo o projeto, está implementado a leitura de dados e todas as funções de tratamento do grafo.
-    teste.c: Está localizado a main do código.
+
+  grafo.c: Nucleo de todo o projeto, está implementado a leitura de dados e todas as funções de tratamento do grafo.
+
+  teste.c: Está localizado a main do código.
 
      
-  includes: Local onde fiica os arquivos do tipo *.h
-    grafo.h: Arquivo de .h para o grafo.c
+  grafo.h: Arquivo de .h para o grafo.c
 
-  testes: Diretório que contém os arquivos de testes.
+  /testes: Diretório que contém os arquivos de testes.
 
 # Como utilizar o algoritmo
   para compilar:
