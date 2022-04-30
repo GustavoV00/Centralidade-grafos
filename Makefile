@@ -55,7 +55,7 @@ endif
 all: grafo
 
 run:
-	./grafo < testes/teste1.in
+	./grafo -i testes/teste1.in -v e
 
 teste: ../build/teste.o ../build/grafo.o
 	$(CC) $(CFLAGS) -o $@ $^
@@ -70,7 +70,7 @@ build:
 	@mkdir -p build
 
 build/%.o: src/%.c | build
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@echo Removing object files
